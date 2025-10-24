@@ -1,221 +1,274 @@
-# Python Week 5 Assessed Workshop
-
-Work in CodeSpaces. 
-
-If CodeSpaces does not load after 5 mins (like last week) open JupyterLab and add your answers to the below exercises in a single notebook.
+# Python Week 6b Practice Workshop
 
 You may use the following cheat sheets if you need to look up any Python commands.
 
 https://github.com/phil-lewis-exe/PythonCheatSheets
 
-**This week you may not use any other websites to help you code.**
-
-**You must ask if you need to use a website to translate the task questions**
-
-**Mobile phones may not be used in class**
-
 ---
 
 ## TASKS
 
+### Part 1a: Default Function Arguments
 
-### Part 1: Say Hi
+*If you are working in `.py` files work in file **`practise_workshop_6_part1a.py`***
 
-*If you are working in CodeSpaces work in file **`5b_part1.py`***
+Type in the following Python function called `print_details` that takes three arguments:
+- `name`
+- `age` (which should default to `None`)
+- `job` (which should default to `"not provided"`)
 
-Write a Python function called `say_hi` that takes one argument `n`.
+The function should print the person's details over three lines.
+1.  It should print the `name`, capitalised using `.title()`.
+2.  If the age is provided it should print the age. E.g. `Age: 40`, otherwise if it should print `Age: unknown`.
+3.  It should print the `job`, capitalised using `.title()`.
 
-The function should display the message `hi` `n`-times each on a single line.
+e.g. `print_details("fred flintstone", 40, "construction worker")`
 
-(i.e. when called with the value 9 it would display hi 9 times).
-
-After writing the function show how to call it, using the example value 4.
-
-The output should be:
+will display:
 
 ```
-hi
-hi
-hi
-hi
+Name: Fred Flintstone
+Age: 40
+Job: Construction Worker
 ```
 
----
 
-### Part 2: Calculating a percentage change
-
-*If you are working in CodeSpaces work in file **`5b_part2.py`***
-
-A programmer wants to write code to calculate the percentage change between two values `a` and `b`.
-
-This can be found using the following formula:
-
-$$\texttt{percent change} = \frac{b - a}{a} \times 100$$
-
-Write a function `percent_change` that takes two arguments `a` and `b` and returns the percent change.
-
-After writing your code add the following code lines to test it. 
+After writing the function, add the following lines to call it and test your code.
 
 ```python
-check_a = percent_change(50,55)
-check_b = percent_change(50,25)
-
-print(check_a, check_b)
-```
-
-The output should be 
-
-```
-10.0 -50.0
-```
-
----
-
-
-### Part 3: Validating an age variable
-
-*If you are working in CodeSpaces work in file **`5b_part3.py`***
-
-A programmer wants to write code to validate that a provide age is sensible.
-
-This must be done in function `validate` that takes a single argument `age`.
-
-This will **return** the string `passed` if the age is an integer, between 0 and 120 inclusive.
-
-It will **return** the string `failed` for any other age value.
-
-The following code shows a way to check if the age is an integer:
-
-```python
-if age == int(age):
-    print("age is an integer")
-else:
-    print("age is not an integer")
-```
-
-Write a function `validate` that takes an argument `age` to do this.
-
-After writing your code add the following code lines to test it. 
-
-```python
-check_minus = validate(-5)
-check_20 = validate(20)
-check_150 = validate(150)
-check_non_int = validate(7.2)
-
-print(check_minus, check_20, check_150, check_non_int)
+print_details("fred flintstone", 40, "construction worker")
+print("---")
+print_details("wilma flintstone")
+print("---")
+print_details("pebbles flitstone", age=3)
+print("---")
+print_details("barney rubble", job="construction worker")
 ```
 
 The output should be:
 
 ```
-failed passed failed failed
+Name: Fred Flintstone
+Age: 40
+Job: Construction Worker
+---
+Name: Wilma Flintstone
+Age: unknown
+Job: Not Provided
+---
+Name: Pebbles Flitstone
+Age: 3
+Job: Not Provided
+---
+Name: Barney Rubble
+Age: unknown
+Job: Construction Worker
 ```
+
+<details><summary>Model answer</summary>
+    
+```python
+def print_details(name, age=None, job="not provided"):
+    print(f"Name: {name.title()}")
+    if age is not None:
+        print(f"Age: {age}")
+    else:
+        print(f"Age: unknown")
+    print(f"Job: {job.title()}")
+```
+
+</details>
 
 ---
 
-### Part 4: Finding the net change over a series
+### Part 1b: Variable-length `*args`
 
-*If you are working in CodeSpaces work in file **`5b_part4.py`***
+*If you are working in `.py` files work in file **`practise_workshop_6_part1b.py`***
 
-A programmer wants to write code to calculate the net change between the start and end of a timeseries.
+Type in the following function `list_to_str` that takes a variable number of positional arguments (`*args`) and one keyword argument `sep` which defaults to `,`.
 
-For example look at this example timeseries,
+The function should join all positional arguments into a single string, separated by the `sep` string, and **return** it.
 
-```
-[ 16, 15, 12, 13, 14, 11 ]
-```
+For example, calling `list_to_str("a","b","c")` should return the string `"a,b,c"`.
+Calling `list_to_str("x","y","z",sep="-")` should return the string `"x-y-z"`.
 
-Here the first value is 16 the last value is 11 and the net change is -5.
 
-i.e. the net change can be found using:
-
-$$\texttt{net change} =  \texttt{last value} - \texttt{first value}$$
-
-Write a function `net_change` that takes a single argument `time_series`.
-
-It should return the net change over the time series provided. 
-
-You can assume the time series passed is always valid and contains at least two values.
-
-After writing your code add the following code lines to test it. 
-
-```python 
-series1 = [ 1, 0, 2, 4 ]
-series2 = [ 10, 0, 2 ]
-
-check_series1 = net_change(series1)
-check_series2 = net_change(series2)
-
-print(check_series1, check_series2)
-```
-
-This should produce the following output:
-
-```
-3 -8
-```
-
-### Part 5: Generating a set of sequences
-
-*If you are working in CodeSpaces work in file **`5b_part5.py`***
-
-A programmer is writing code to explore a mathematical sequence.
-
-In this sequence the next value is found by taking the product of the last two values.
-
-For example for the sequence starting : **2, 3**
-
-The next value is $2 \times 3$, growing the sequence to: **2, 3, 6**
-
-The next value is $3 \times 6$, growing the sequence to: **2, 3, 6, 18**
-
-The next value is $6 \times 18$, growing the sequence to: **2, 3, 6, 18, 108**
-
-Write a function `grow_list` that takes an input argument `mylist` that stores a sequence in a Python list.
-
-The function should calculate the next term in the sequence.
-
-It should return a **new** list that contains the extended sequence.
-
-After writing your code add the following code lines to test it. 
+After writing the function, add the following lines to test it:
 
 ```python
-list1 = [ 2, 3 ]
-list2 = grow_list(list1)
-list3 = grow_list(list2)
-
-print(list1, list2, list3)
+print( list_to_str("a","b","c") )
+print( list_to_str("x","y","z",sep="-") )
 ```
 
-This should produce the output:
+The output should be:
 
 ```
-[2, 3] [2, 3, 6] [2, 3, 6, 18]
+a,b,c
+x-y-z
 ```
 
-Hint. to make a copy of a list you can use either code like:
+<details><summary>Model answer</summary>
 
 ```python
-mylist = [1,2,3]
-mylist_copy1 = mylist.copy()
-mylist_copy2 = mylist[:]
+def list_to_str(*args, sep=","):
+    mystr = ""
+    first = True
+    for item in args:
+        if first:
+            first = False
+        else:
+            mystr = mystr + sep
+        mystr = mystr + item
+    return mystr
 ```
+
+</details>
 
 ---
 
-### Submitting your work
+### Part 1c: Variable-length `**kwargs`
 
-Run the following lines in the terminal to stage, commit and push your code back to your GitHub repository:
+*If you are working in `.py` files work in file **`practise_workshop_6_part1c.py`***
+
+Type in the following function `print_args` that can accepts any sets of positional arguments (`*args`) and keyword arguments (`**kwargs`).
+
+The function should loop through and print all arguments it receives, numbering them sequentially.
+-   It should first print the positional arguments in the format: `arg {i} (position arg) is {value}`
+-   It should first print the keyowrd arguments in the format:  `arg {i} (keyword arg) is {key}={value}`
+
+For example, calling `print_args("a", "b" value="c")` would print:
 
 ```
-git add .
-git commit -m "completed 5b"
-git push
+arg 1 (position arg) is a
+arg 2 (position arg) is b
+arg 3 (keyword arg) is value = c
 ```
 
-To check your work has been saved you can run the line of code below in the terminal to get the web address of the repository in GitHub. Goto the repository and check the completed code files are stored.
+
+After writing the function, add the following line to test it:
+
+```python
+print_args("a","b","c", kw1="d", kw2="e")
+```
+
+The output should be:
 
 ```
-git config --get remote.origin.url
+arg 1 (position arg) is a
+arg 2 (position arg) is b
+arg 3 (position arg) is c
+arg 4 (keyword arg) is kw1 = d
+arg 5 (keyword arg) is kw2 = e
 ```
+
+<details><summary>Model answer</summary>
+
+```python
+def print_args(*args, **kwargs):
+    i = 1
+    for arg in args:
+        print(f"arg {i} (position arg) is {arg}")
+        i=i+1
+    for k in kwargs.keys():
+        print(f"arg {i} (keyword arg) is {k} = {kwargs[k]}" )
+        i=i+1
+```
+
+</details>
+
+---
+
+### Part 2: Creating a Module
+
+Create a **new file** named **`mymaths.py`**.
+
+In this file, add the following functions. This file will act as a module, so do **not** add any test calls or `print()` statements to this file.
+
+You will need to create the following functions:
+- `def add(a,b)`: should return the sum of `a` and `b`.
+- `def minus(a,b)`: should return `b` subtracted from `a`.
+- `def times(a,b)`: should return the product of `a` and `b`.
+- `def divide(a,b)`: should return `a` divided by `b`.
+- `def square(a)`: should return the square of `a`. **This function must use your `times` function.**
+- `def double(a)`: should return double the value of `a`. **This function must use your `add` function.**
+- `def half(a)`: should return half the value of `a`. **This function must use your `divide` function.**
+
+<details><summary>Model answer</summary>
+
+```python
+# saved in file mymaths.py
+def add(a,b):
+    return a+b
+
+def minus(a,b):
+    return a-b
+
+def times(a,b):
+    return a*b
+
+def divide(a,b):
+    return a/b
+
+def square(a):
+    return times(a,a)
+
+def double(a):
+    return add(a,a)
+
+def half(a):
+    return divide(a,2)
+```
+
+</details>
+
+---
+
+### Using Your Module
+
+*If you are working in `.py` files work in file **`practise_workshop_6_part2.py`***
+
+Now, write a script that imports your `mymaths` module and uses the functions you created to perform the following calculations.
+
+**You must not use the `+`, `-`, `*`, `/`, or `**` operators in this file.** 
+
+All calculations must be done using your imported functions.
+
+i. Find 5 + 7 and store in variable `a`
+
+ii. Find 8 / 2 and store in variable `b`
+
+iii. Find $10^2$ and store in variable `c`
+
+iv. Find **half of 25** and store in variable `d`
+
+Print the result of each calculation, to check them using code:
+
+print(a,b,c,d)
+
+
+The output should be:
+
+```
+12 4.0 100 12.5
+```
+
+<details><summary>Model answer</summary>
+
+```python
+import mymaths
+
+# a = 5 + 7 
+a = mymaths.add(5, 7)
+
+# b = 8 / 2
+b = mymaths.divide(8, 2)
+
+# c = 10**2
+c = mymaths.square(10)
+
+# d = half of 25
+d = mymaths.half(25)
+print(a,b,c,d)
+```
+
+</details>
